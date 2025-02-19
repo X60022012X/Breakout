@@ -39,7 +39,6 @@ butn3 = Button(x=screen_width - (75*3 - 5), y=10, image=quit_image)
 running = True
 while running:
     trykkede_taster = pg.key.get_pressed()
-
     for event in pg.event.get():
         if (event.type == pg.QUIT) or trykkede_taster[K_ESCAPE] or q_var:
             running = False
