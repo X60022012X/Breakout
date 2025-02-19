@@ -23,18 +23,16 @@ q_var = False
 difficulity = 1
 highscore = 0
 score = 0
-
 brick_list = create_bricks(screen_width, difficulity)
-
 
 
 ball = Ball(farge=WHITE, radius=10, x=screen_width/2 - 5, y=screen_height- 150, dx=5, dy=-8)
 pad = Pad(farge=WHITE, bredde=200, hoyde=20, fart=15, scr_width=screen_width, scr_height=screen_height)
 
-
 butn1 = Button(x=screen_width - (75*1 - 5), y=10, image=pause_image)
 butn2 = Button(x=screen_width - (75*2 - 5), y=10, image=restart_image)
 butn3 = Button(x=screen_width - (75*3 - 5), y=10, image=quit_image)
+
 
 running = True
 while running:

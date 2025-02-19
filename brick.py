@@ -15,15 +15,17 @@ def create_bricks(screen_width, difficulity):
             y = j * block_height + 80 + 6
             rect = pg.Rect(x, y, block_width - 10, block_height - 6)
             brick_list.append([rect, difficulity])  
-
     return brick_list
 
-def pre_render_difficulty_text(font, difficulties, color):
+
+
+def pre_render_difficulty_text(font, color):
     difficulty_surfaces = {}
-    for difficulty in difficulties:
+    for difficulty in range(1, 11):
         text_surface = font.render(str(difficulty), True, color)
         difficulty_surfaces[difficulty] = text_surface
     return difficulty_surfaces
+
 
 
 def draw_bricks(screen, brick_list, difficulty_surfaces):
@@ -33,6 +35,7 @@ def draw_bricks(screen, brick_list, difficulty_surfaces):
             text_surface = difficulty_surfaces[difficulty]
             text_rect = text_surface.get_rect(center=rect.center)
             screen.blit(text_surface, text_rect)
+
 
 
 def detect_collision_brick(rect, ball):
@@ -47,6 +50,7 @@ def detect_collision_brick(rect, ball):
     return distance <= ball.radius
 
 
+
 def handle_ball_rebound(ball, rect):
     if (ball.y > rect.bottom):
         ball.dy = abs(ball.dy)
@@ -59,6 +63,7 @@ def handle_ball_rebound(ball, rect):
             ball.dx = abs(ball.dx)
 
 
+
 def brick_collision(ball, brick_list, score, difficulity):
     for rect in brick_list:
         if detect_collision_brick(rect[0], ball):
@@ -68,6 +73,7 @@ def brick_collision(ball, brick_list, score, difficulity):
             score += difficulity
             brick_list.remove(rect)
     return brick_list, score 
+
 
 
 def game_won(screen, pad, ball, screen_width, screen_height):
@@ -85,16 +91,18 @@ def game_won(screen, pad, ball, screen_width, screen_height):
     text_width, text_height = font.size(text)
     screen.blit(tekst_surface, (screen_width/2 - text_width/2, screen_height/2 - text_height/2))
 
-           
+
+
 def check_score(screen, pad, ball, screen_width, screen_height, brick_list, score, difficulity):
     if score == (BLOCKS_PER_ROW * BLOCKS_PER_COL) * difficulity:
         game_won(screen, pad, ball, screen_width, screen_height)
     return score
 
 
+
 def update_bricks(screen, pad, ball, screen_width, screen_height, brick_list, score, difficulity):
     brick_list, score = brick_collision(ball, brick_list, score, difficulity)
-    difficulty_surfaces = pre_render_difficulty_text(pg.font.SysFont("Arial", 20), [1,2,3,4,5,6,7,8,9,10], BLACK)
+    difficulty_surfaces = pre_render_difficulty_text(pg.font.SysFont("Arial", 20), BLACK)
     draw_bricks(screen, brick_list, difficulty_surfaces)
     score = check_score(screen, pad, ball, screen_width, screen_height, brick_list, score, difficulity)
     return score
